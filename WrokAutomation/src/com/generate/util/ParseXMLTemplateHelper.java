@@ -22,15 +22,17 @@ public class ParseXMLTemplateHelper {
 	public static final String DEFAULTDIRECTORY = System.getProperty("user.dir")+"/bin/com/generate/template/";
 	
 	private static ParseXMLTemplateHelper parseXMLTemplateHelper ;
-	private List<File>  templateFiles= new ArrayList<File>();
-	private List<XMLTemplate> xmlTempaltes = new ArrayList<XMLTemplate>();
+	public static List<File>  templateFiles= new ArrayList<File>();
+	public static List<XMLTemplate> xmlTempaltes = new ArrayList<XMLTemplate>();
+	public static List<String> methodNames = new ArrayList<String>();
 	
-	public List<XMLTemplate> getXmlTempaltes() {
-		return xmlTempaltes;
-	}
-
 	private ParseXMLTemplateHelper(){
 		super();
+		try {
+			init();
+		} catch (DocumentException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public static synchronized ParseXMLTemplateHelper getInstance(){
@@ -40,19 +42,15 @@ public class ParseXMLTemplateHelper {
 		return parseXMLTemplateHelper;
 	}
 	
+	//convert all XML files to a Map
 	public void init() throws DocumentException{
 		getXMLDirectory(new File(DEFAULTDIRECTORY));
 		for (File template : templateFiles) {
-			XMLTemplate xmlTemplate = convertXMLToModel(template);
-			xmlTempaltes.add(xmlTemplate);
-			System.out.println("--Method:"+xmlTemplate.getName());
-//			for (Map.Entry<String, String> entry : xmlTemplate.getSections().entrySet()) {
-//				System.out.println("Key:"+entry.getKey());
-//				System.out.println("value:"+entry.getValue());
-//			}
+			xmlTempaltes.add(convertXMLToModel(template));
 		}
 	}
 	
+	// load all XML files
 	public void getXMLDirectory(File file){
 		File[] files = null;
 		if(file.isDirectory()){
@@ -65,6 +63,7 @@ public class ParseXMLTemplateHelper {
 		}
 	}
 	
+	//convert a XML file to XMLTemplate
 	public XMLTemplate convertXMLToModel(File file) throws DocumentException{
 		
 		Document doc = DocumentHelper.createDocument();
@@ -75,6 +74,8 @@ public class ParseXMLTemplateHelper {
 		Iterator<Element> notes = root.elementIterator();
 		XMLTemplate xmlTemplate = new XMLTemplate();
 		xmlTemplate.setName(root.attributeValue("name"));
+		methodNames.add(root.attributeValue("name"));
+		//convert sections to Map
 		Map<String,String> sections = xmlTemplate.getSections();
 		while(notes.hasNext()){
 			Element note = (Element)notes.next();
@@ -82,6 +83,15 @@ public class ParseXMLTemplateHelper {
 			sections.put(note.attributeValue("name"), note.getText());
 		}
 		return xmlTemplate;
+	}
+	
+	public static XMLTemplate getXMLTemplate(String xmlMethodName){
+		for (XMLTemplate xmlTemplate : xmlTempaltes) {
+			if(xmlMethodName.equals(xmlMethodName)){
+				return xmlTemplate;
+			}
+		}
+		return new XMLTemplate();
 	}
 	
 }

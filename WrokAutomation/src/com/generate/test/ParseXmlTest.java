@@ -73,7 +73,6 @@ public class ParseXmlTest {
 	
 	@Test
 	public void testGetAllFiles(){
-		String dir = "com/generate/template/";
 		String path = "D:/Workspaces/WorkConcise/bin/com/generate/template/";
 		System.out.println(System.getProperty("user.dir"));
 		
@@ -82,11 +81,7 @@ public class ParseXmlTest {
 	
 	@Test
 	public void testparseXMLTemplateHelper() {
-		try {
-			ParseXMLTemplateHelper.getInstance().init();
-		} catch (DocumentException e) {
-			e.printStackTrace();
-		}
+		ParseXMLTemplateHelper.getInstance();
 	}
 	
 	

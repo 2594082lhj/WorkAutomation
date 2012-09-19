@@ -1,21 +1,21 @@
-package com.generate.model;
+package com.generate.model.config;
 
 import java.io.Serializable;
 
-public class Config implements Serializable{
+public class BaseConfig implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	
-	private String note;		//注释
-	private String name;		//方法名称
-	private String parameter;	//请求参数
-	private String mapping;		//返回
+	private String note;		
+	private String name;		
+	private String parameter;	
+	private String mapping;		
 	
-	public Config() {
+	public BaseConfig() {
 		super();
 	}
 	
-	public Config(String name, String parameter, String mapping) {
+	public BaseConfig(String name, String parameter, String mapping) {
 		super();
 		this.name = name;
 		this.parameter = parameter;

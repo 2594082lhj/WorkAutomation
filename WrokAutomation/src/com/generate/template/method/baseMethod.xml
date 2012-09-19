@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<method name="base">
-	<section name="note">
+<method name="baseMethod">
+	<section name="notes">
 		<![CDATA[
 			/**
 			 * $[note]
@@ -40,7 +40,7 @@
 		]]>
 	</section>
 	
-	<section name="return">
+	<section name="returnNull">
 		<![CDATA[
 			this.write(response, "<rows></rows>");
 			return null;

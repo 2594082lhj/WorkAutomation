@@ -4,14 +4,7 @@ import org.junit.Assert;
 
 public class StringUtils {
 	
-	private static final String SELECTORMODEL = "$[*]";
-	
-	/**
-	 * Comma Separated 逗号相隔
-	 * 将StringArray转换成以","相隔的字符串
-	 * @param stringArray
-	 * @return
-	 */
+	//String[] to String use "," separated
 	public static String toCommaSeparated(String[] stringArray){
 		StringBuffer string = new StringBuffer();
 		for (int i = 0; i < stringArray.length; i++) {
@@ -24,16 +17,10 @@ public class StringUtils {
 		return string.toString();
 	}
 	
-	/**
-	 * 在hql中根据参数名找到对应的条件key
-	 * 条件名与hql中的key的命名需要一致
-	 * @param parameterName
-	 * @return
-	 */
 	public static String getConditionKey(String hql,String parameterName){
 		if(hql == null || hql.equals("")){
 			hql = null;
-			Assert.assertNotNull("Error: Parameter对象中的hql为空", hql);
+			Assert.assertNotNull("Error: HQL is must be not null !", hql);
 		}
 		String[] baseHql = hql.split(" ");
 		for (String key : baseHql) {
@@ -43,15 +30,10 @@ public class StringUtils {
 				return baseHql[baseHql.length-1]+"."+parameterName;
 			}
 		}
-		Assert.assertNotNull("Error: hql中不存在"+parameterName, parameterName);
+		Assert.assertNotNull("Error: "+hql+" not contain parameter named ["+ parameterName+"]", hql);
 		return null;
 	}
 	
-	/**
-	 * array not null and have value
-	 * @param value
-	 * @return
-	 */
 	public static boolean isNullOrBlank(String[] value){
 		if(value == null || value.length == 0 ){
 			return true;
@@ -63,11 +45,6 @@ public class StringUtils {
 		return !isNotNullOrBlank(value);
 	}
 	
-	/**
-	 * string is not null or blank
-	 * @param vlaue
-	 * @return
-	 */
 	public static boolean isNullOrBlank(String value){
 		if(value == null || "".equalsIgnoreCase(value) || value.length() == 0 ){
 			return true;
@@ -75,11 +52,6 @@ public class StringUtils {
 		return false;
 	}
 	
-	/**
-	 * 首字母变大写
-	 * @param value
-	 * @return
-	 */
 	public static String toUppercaseFirstLetter(String value){
 		if(isNullOrBlank(value)){
 			return null;
@@ -91,11 +63,6 @@ public class StringUtils {
 		
 	}
 	
-	/**
-	 * 首字母变小写
-	 * @param value
-	 * @return
-	 */
 	public static String toLowerCaseFirstLetter(String value){
 		if(isNullOrBlank(value)){
 			return null;
@@ -108,10 +75,6 @@ public class StringUtils {
 	
 	public static boolean isNotNullOrBlank(String value){
 		return !isNullOrBlank(value);
-	}
-	
-	public static void main(String[] args) {
-		System.out.println(toLowerCaseFirstLetter("value"));
 	}
 	
 }
