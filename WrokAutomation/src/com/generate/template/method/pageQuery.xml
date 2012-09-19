@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<method name="pageQuery">
+	<section name="hql">
+		<![CDATA[
+			hql.append(" $[hql] ");	
+		]]>
+	</section>
+			
+	<section name="pageHandel">
+		<![CDATA[
+			p = new PageHandel(request, hql.toString(), conditions);
+			p = this.getPageHandel(p, hqlColumnName, headerName);
+			p.setStyle("$[style]");
+			p.setExecuteModel(PageHandel.EXE_OBJECT_MODEL);
+			p.execute();
+		]]>
+	</section>
+			
+	<section name="firstEnter">
+		<![CDATA[
+			if (StringUtil.isNullOrBlank(flag)) {
+				hql.append(" where 1=2 ");
+				$[pageHandel]				
+			}
+		]]>
+	</section>
+			
+	<section name="noQueryClickSequence">
+		<![CDATA[
+				if ("'pageFlag'".equals(flag)) {
+				this.write(response, "<rows></rows>");
+				return null;
+			}
+		]]>
+	</section>
+	
+	<section name="addConditions">
+		<![CDATA[
+			hql.append(" where 1=1 ");
+			if (!StringUtil.isNullOrBlank($[condition])) {
+				hql.append(" and $[condition] = :$[condition] ");
+				conditions.add("$[condition]", $[condition]);
+			}
+		]]>
+	</section>
+	
+	<section name="spellingMessage">
+		<![CDATA[
+			List<Object[]> payErrorReturnCodeList = p.getPage().getData();
+			StringBuffer xml = new StringBuffer();
+			int NO = p.getPage().getFirstRecord() + 1;
+			xml.append("<rows>");
+			for (Object[] objects : payErrorReturnCodeList) {
+				Object id = objects[0];
+				objects[0] = NO;
+				xml.append(this.reformXml(objects, id));
+				NO++;
+			}
+			xml.append("</rows>");
+		]]>
+	</section>
+			
+	<section name="pageInfo">
+		<![CDATA[
+			if (StringUtil.isNullOrBlank(HttpUtil.getParamValueAllowNull(
+					request, "flag"))) {
+				this.write(response, p.getPage().getTotalRecord() + "[split]"
+						+ p.getPage().getTotalPage() + "[split]" + "e"
+						+ "[split]");
+			} else {
+				this.write(response, p.getPage().getTotalRecord() + "[split]"
+						+ p.getPage().getTotalPage() + "[split]");
+			}
+		]]>
+	</section>
+		
+</method>
