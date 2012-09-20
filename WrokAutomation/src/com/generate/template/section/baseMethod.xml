@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <method name="baseMethod">
-	<section name="notes">
+	
+	<section name="definedMethod">
 		<![CDATA[
 			/**
 			 * $[note]
@@ -11,16 +12,16 @@
 			 * @return
 			 * @throws IOException
 			 */
-		]]>
-	</section>
-	
-	<section name="definedMethod">
-		<![CDATA[
 			public ActionForward $[name](ActionMapping mapping,
 			ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws IOException {
 		try {
-			this.getHead(request);
+				this.getHead(request);
+			} catch (Exception e) {
+				log.error("未知异常", e);
+			}
+			return mapping.findForward(this.ACTION_ERROR);
+		}
 		]]>
 	</section>
 	
@@ -51,16 +52,6 @@
 		<![CDATA[
 			request.setAttribute("transfers", "<rows></rows>");
 			return mapping.findForward("$[mapping]");
-		]]>
-	</section>
-	
-	<section name="endOfMethod">
-		<![CDATA[
-				} catch (Exception e) {
-				log.error("未知异常", e);
-			}
-			return mapping.findForward(this.ACTION_ERROR);
-		}
 		]]>
 	</section>
 	
