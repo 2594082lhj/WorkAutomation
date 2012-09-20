@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<method name="baseMethod">
-	<logic name="base">
-		<section name=""/>
-	</logic>
-</method>
+
+<logic name="baseLogic">
+	<section ref="definedRquestParameters"/>
+	<section ref="definedParameters"/>
+	<section ref="definedParameters">
+</logic>

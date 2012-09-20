@@ -13,14 +13,14 @@ import org.dom4j.io.SAXReader;
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.generate.model.XMLTemplate;
+import com.generate.model.SectionTemplate;
 import com.generate.util.ParseXMLTemplateHelper;
 
 
 public class ParseXmlTest {
 	
 	@SuppressWarnings("unchecked")
-	public XMLTemplate readTemplate(File file) throws DocumentException{
+	public SectionTemplate readTemplate(File file) throws DocumentException{
 		String filePath = file.getPath();
 		InputStream templateStream = this.getClass().getClassLoader().getResourceAsStream(filePath) ;
 		Assert.assertNotNull("Can't parse ["+ filePath+"]", templateStream);
@@ -31,7 +31,7 @@ public class ParseXmlTest {
 		
 		Element root = doc.getRootElement();
 		Iterator<Element> notes = root.elementIterator();
-		XMLTemplate xmlTemplate = new XMLTemplate();
+		SectionTemplate xmlTemplate = new SectionTemplate();
 		xmlTemplate.setName(root.attributeValue("name"));
 		Map<String,String> sections = xmlTemplate.getSections();
 		while(notes.hasNext()){
@@ -60,7 +60,7 @@ public class ParseXmlTest {
 	public void testReader(){
 		String filePath = "com/generate/method/template/pageQuery.xml";
 		try {
-			XMLTemplate xmlTemplate =  readTemplate(new File(filePath));
+			SectionTemplate xmlTemplate =  readTemplate(new File(filePath));
 			Map<String,String> sections = xmlTemplate.getSections();
 			for (Map.Entry<String, String> entry : sections.entrySet()) {
 				System.out.println("Key:"+entry.getKey());

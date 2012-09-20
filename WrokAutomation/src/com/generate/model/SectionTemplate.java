@@ -3,7 +3,7 @@ package com.generate.model;
 import java.util.HashMap;
 import java.util.Map;
 
-public class XMLTemplate {
+public class SectionTemplate {
 	
 	private String name;
 	

@@ -6,7 +6,7 @@ import java.util.Map;
 import junit.framework.Assert;
 
 import com.generate.method.section.BaseMethod;
-import com.generate.model.XMLTemplate;
+import com.generate.model.SectionTemplate;
 import com.generate.model.config.BaseConfig;
 import com.generate.util.ParseXMLTemplateHelper;
 import com.generate.util.SelectorUtils;
@@ -14,23 +14,15 @@ import com.generate.util.SelectorUtils;
 public class BaseMethodImpl implements BaseMethod {
 	
 	public static final ParseXMLTemplateHelper parseXMLTemplateHelper = ParseXMLTemplateHelper.getInstance(); 
-	public static final List<XMLTemplate> xmlTemplates = ParseXMLTemplateHelper.xmlTempaltes;
+	public static final List<SectionTemplate> xmlTemplates = ParseXMLTemplateHelper.sectionTemplates;
 	private static final String METHODNAME = "baseMethod";
-	private static Map<String,String> sections = ParseXMLTemplateHelper.getXMLTemplate(METHODNAME).getSections();
+	private static Map<String,String> sections = ParseXMLTemplateHelper.getSectionTemplate(METHODNAME).getSections();
 	
 	public BaseMethodImpl() {
 		super();
 		//can find XML file 
 		List<String> methodNames = ParseXMLTemplateHelper.methodNames;
 		Assert.assertTrue("Named ["+METHODNAME+"] must be not found , Plase check the XML! ", methodNames.contains(METHODNAME));
-	}
-
-	@Override
-	public String notes(BaseConfig config) {
-		String value = config.getNote();
-		String source = sections.get("notes");
-		String regex = "note";
-		return SelectorUtils.assignmentPlaceholder(source,value,regex);
 	}
 
 	@Override
@@ -67,11 +59,6 @@ public class BaseMethodImpl implements BaseMethod {
 		String source = sections.get("returnMapping");
 		String regex = "mapping";
 		return SelectorUtils.assignmentPlaceholder(source,value,regex);
-	}
-
-	@Override
-	public String endOfMethod() {
-		return sections.get("endOfMethod");
 	}
 
 }

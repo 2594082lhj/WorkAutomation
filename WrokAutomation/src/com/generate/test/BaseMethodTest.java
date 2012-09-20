@@ -41,11 +41,9 @@ public class BaseMethodTest {
 		BaseMethodImpl b = new BaseMethodImpl();
 		StringBuffer buffer = new StringBuffer();
 		buffer
-		.append(b.notes(config))
 		.append(b.definedMethod(config))
 		.append(b.definedParameters(config))
-		.append(b.returnMapping(config))
-		.append(b.endOfMethod());
+		.append(b.returnMapping(config));
 		
 		System.out.println(buffer.toString());
 	}

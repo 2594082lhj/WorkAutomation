@@ -17,6 +17,9 @@
 			HttpServletResponse response) throws IOException {
 		try {
 				this.getHead(request);
+				
+				$[logic:baseLogic]
+				
 			} catch (Exception e) {
 				log.error("未知异常", e);
 			}

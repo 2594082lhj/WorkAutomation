@@ -13,17 +13,25 @@ import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 import org.junit.Assert;
 
-import com.generate.model.XMLTemplate;
+import com.generate.model.LogicTemplate;
+import com.generate.model.SectionTemplate;
 
 @SuppressWarnings("unchecked")
 public class ParseXMLTemplateHelper {
 	
+	public static final String Method = "method";
 	public static final String SECTION = "section";
+	public static final String LOGIC = "logic";
+	
+	private Document doc = DocumentHelper.createDocument();
+	private SAXReader reader = new SAXReader();
+	
 	public static final String DEFAULTDIRECTORY = System.getProperty("user.dir")+"/bin/com/generate/template/";
 	
 	private static ParseXMLTemplateHelper parseXMLTemplateHelper ;
 	public static List<File>  templateFiles= new ArrayList<File>();
-	public static List<XMLTemplate> xmlTempaltes = new ArrayList<XMLTemplate>();
+	public static List<SectionTemplate> sectionTemplates = new ArrayList<SectionTemplate>();
+	public static List<LogicTemplate> logicTemplates = new ArrayList<LogicTemplate>();
 	public static List<String> methodNames = new ArrayList<String>();
 	
 	private ParseXMLTemplateHelper(){
@@ -46,7 +54,13 @@ public class ParseXMLTemplateHelper {
 	public void init() throws DocumentException{
 		getXMLDirectory(new File(DEFAULTDIRECTORY));
 		for (File template : templateFiles) {
-			xmlTempaltes.add(convertXMLToModel(template));
+			doc = reader.read(template);
+			Element root = doc.getRootElement();
+			if(Method.equals(root.getName())){
+				convertXMLToSectionModel(root);
+			}else if(LOGIC.equals(root.getName())){
+				convertXMLToLogicModel(root);
+			}
 		}
 	}
 	
@@ -63,35 +77,61 @@ public class ParseXMLTemplateHelper {
 		}
 	}
 	
-	//convert a XML file to XMLTemplate
-	public XMLTemplate convertXMLToModel(File file) throws DocumentException{
+	//convert a XML file to SectionTemplate
+	public void convertXMLToSectionModel(Element root) throws DocumentException{
 		
-		Document doc = DocumentHelper.createDocument();
-		SAXReader reader = new SAXReader();
-		doc = reader.read(file);
+		SectionTemplate xmlTemplate = new SectionTemplate();
+		Iterator<Element> nodeList = root.elementIterator();
 		
-		Element root = doc.getRootElement();
-		Iterator<Element> notes = root.elementIterator();
-		XMLTemplate xmlTemplate = new XMLTemplate();
 		xmlTemplate.setName(root.attributeValue("name"));
 		methodNames.add(root.attributeValue("name"));
-		//convert sections to Map
+		
 		Map<String,String> sections = xmlTemplate.getSections();
-		while(notes.hasNext()){
-			Element note = (Element)notes.next();
-			Assert.assertEquals("Named "+note.getName()+" is not Legitimate ", SECTION, note.getName());
+		while(nodeList.hasNext()){
+			Element note = (Element)nodeList.next();
+			//if note is logic
+			if(LOGIC.equals(note.getName())){
+				convertXMLToLogicModel(root);
+				continue;
+			}
+			Assert.assertEquals("Named ["+note.getName()+"] section is not exist ", SECTION, note.getName());
 			sections.put(note.attributeValue("name"), note.getText());
 		}
-		return xmlTemplate;
+		sectionTemplates.add(xmlTemplate);
 	}
 	
-	public static XMLTemplate getXMLTemplate(String xmlMethodName){
-		for (XMLTemplate xmlTemplate : xmlTempaltes) {
-			if(xmlMethodName.equals(xmlMethodName)){
-				return xmlTemplate;
+	//convert a XML file to LogicTemplate
+	public void convertXMLToLogicModel(Element root) throws DocumentException{
+		LogicTemplate logicTemplate = new LogicTemplate();
+		Iterator<Element> nodeList = root.elementIterator();
+		
+		logicTemplate.setName(root.attributeValue("name"));
+		
+		List<String> sections = logicTemplate.getSection();
+		while(nodeList.hasNext()){
+			Element note = (Element)nodeList.next();
+			Assert.assertEquals("Named "+note.getName()+" is not Legitimate ", LOGIC, note.getName());
+			sections.add(note.attributeValue("name"));
+		}
+		logicTemplates.add(logicTemplate);
+	}
+	
+	public static SectionTemplate getSectionTemplate(String xmlMethodName){
+		for (SectionTemplate sectionTemplate : sectionTemplates) {
+			if(xmlMethodName.equals(sectionTemplate.getName())){
+				return sectionTemplate;
 			}
 		}
-		return new XMLTemplate();
+		return new SectionTemplate();
+	}
+	
+	public static LogicTemplate getLogicTempalte(String xmlMethodName){
+		for (LogicTemplate logicTempalte : logicTemplates) {
+			if(xmlMethodName.equals(logicTempalte.getMethodName())){
+				return logicTempalte;
+			}
+		}
+		return new LogicTemplate();
 	}
 	
 }
