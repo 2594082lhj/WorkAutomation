@@ -9,7 +9,7 @@ import com.generate.method.section.BaseMethod;
 import com.generate.model.SectionTemplate;
 import com.generate.model.config.BaseConfig;
 import com.generate.util.ParseXMLTemplateHelper;
-import com.generate.util.SelectorUtils;
+import com.generate.util.MarkUtils;
 
 public class BaseMethodImpl implements BaseMethod {
 	
@@ -30,7 +30,7 @@ public class BaseMethodImpl implements BaseMethod {
 		String value = config.getName();
 		String source = sections.get("definedMethod");
 		String regex = "name";
-		return SelectorUtils.assignmentPlaceholder(source,value,regex);
+		return MarkUtils.assignmentMark(source,value,regex);
 	}
 
 	@Override
@@ -38,7 +38,7 @@ public class BaseMethodImpl implements BaseMethod {
 		String value = config.getParameter();
 		String source = sections.get("definedParameters");
 		String regex = "parameter";
-		return SelectorUtils.assignmentPlaceholder(source,value,regex);
+		return MarkUtils.assignmentMark(source,value,regex);
 	}
 
 	@Override
@@ -58,7 +58,7 @@ public class BaseMethodImpl implements BaseMethod {
 		String value = config.getMapping();
 		String source = sections.get("returnMapping");
 		String regex = "mapping";
-		return SelectorUtils.assignmentPlaceholder(source,value,regex);
+		return MarkUtils.assignmentMark(source,value,regex);
 	}
 
 }
