@@ -1,44 +1,38 @@
 package com.generate.util;
 
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.generate.model.LogicTemplate;
+
 public class MarkUtils {
 	
-	public static final String LOGICMARK = "\\$\\[logic\\:.*\\]";
+	public static final String LOGICMARK = ".*(\\$\\[logic\\:.*]).*";
 	
-	public static String assignmentMark(String source,String value,String regex){
-		Pattern pattern = Pattern.compile("\\$\\["+regex+"\\]");  
+	public static String getLogicMarkName(String source){
+		Pattern pattern = Pattern.compile(LOGICMARK,Pattern.CASE_INSENSITIVE);  
 		Matcher matcher = pattern.matcher(source);
+		String returnValue = "";
 		if(matcher.find()){
-			source = matcher.replaceFirst(value);
+			returnValue = matcher.group(1).replaceAll("\\$\\[logic:", "");
+			returnValue = returnValue.replaceAll("\\]", "");
 		}
-		return source;
+		return returnValue;
 	}
 	
-	public static String assignmentMark(String source,Map<String,String> valueRegex){
-		for (Map.Entry<String, String> entry : valueRegex.entrySet()) {
-			return assignmentMark(source,entry.getKey(), entry.getValue());
+	public static String logicToSection(String source){
+		StringBuffer logicSection = new StringBuffer();
+		String logicName = getLogicMarkName(source);
+		LogicTemplate logicTemplate = ParseXMLTemplateHelper.getLogicTemplate(logicName);
+		List<String> sectionNames = logicTemplate.getSection();
+		Map<String,String> sections = ParseXMLTemplateHelper.getAllSections(); 
+		for (String sectionName : sectionNames) {
+			logicSection.append(sections.get(sectionName));
 		}
-		return source;
+		return logicSection.toString();
 	}
 	
-	public static boolean hasLogic(String source){
-		Pattern pattern = Pattern.compile(LOGICMARK);  
-		Matcher matcher = pattern.matcher(source);
-		return matcher.find(0);
-	}
-	
-	
-	
-	public static void main(String[] args) {
-//		String source = "flsjelfiefjeifj $[name] lsjflseijfeoiljf";
-//		String value = "Value";
-//		String regex = "\\$\\[name\\]";
-//		System.out.println(assignmentMark(source, value,regex));
-		String source = "rejgjljglreiewehwdn $[logic:ieje] jfoeisjf";
-		System.out.println(hasLogic(source));
-	}
 	
 }

@@ -2,6 +2,7 @@ package com.generate.util;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -125,13 +126,21 @@ public class ParseXMLTemplateHelper {
 		return new SectionTemplate();
 	}
 	
-	public static LogicTemplate getLogicTempalte(String xmlMethodName){
+	public static LogicTemplate getLogicTemplate(String xmlMethodName){
 		for (LogicTemplate logicTempalte : logicTemplates) {
 			if(xmlMethodName.equals(logicTempalte.getMethodName())){
 				return logicTempalte;
 			}
 		}
 		return new LogicTemplate();
+	}
+	
+	public static Map<String,String> getAllSections(){
+		Map<String,String> allSections = new HashMap<String, String>();
+		for (SectionTemplate sectionTempalte : sectionTemplates) {
+			allSections.putAll(sectionTempalte.getSections());
+		}
+		return allSections;
 	}
 	
 }

@@ -3,5 +3,4 @@
 <logic name="baseLogic">
 	<section ref="definedRquestParameters"/>
 	<section ref="definedParameters"/>
-	<section ref="definedParameters">
 </logic>

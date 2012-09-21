@@ -9,7 +9,6 @@ import com.generate.method.section.BaseMethod;
 import com.generate.model.SectionTemplate;
 import com.generate.model.config.BaseConfig;
 import com.generate.util.ParseXMLTemplateHelper;
-import com.generate.util.MarkUtils;
 
 public class BaseMethodImpl implements BaseMethod {
 	
@@ -29,21 +28,23 @@ public class BaseMethodImpl implements BaseMethod {
 	public String definedMethod(BaseConfig config) {
 		String value = config.getName();
 		String source = sections.get("definedMethod");
-		String regex = "name";
-		return MarkUtils.assignmentMark(source,value,regex);
+		String regex = "$[name]";
+		return source.replace(regex, value);
 	}
 
 	@Override
 	public String definedParameters(BaseConfig config) {
 		String value = config.getParameter();
 		String source = sections.get("definedParameters");
-		String regex = "parameter";
-		return MarkUtils.assignmentMark(source,value,regex);
+		String regex = "$[parameter]";
+		return source.replace(regex, value);
 	}
 
 	@Override
 	public String definedRequestParameters(BaseConfig config) {
-		// TODO Auto-generated method stub
+		
+		
+		
 		return null;
 	}
 
@@ -57,8 +58,8 @@ public class BaseMethodImpl implements BaseMethod {
 	public String returnMapping(BaseConfig config) {
 		String value = config.getMapping();
 		String source = sections.get("returnMapping");
-		String regex = "mapping";
-		return MarkUtils.assignmentMark(source,value,regex);
+		String regex = "$[mapping]";
+		return source.replace(regex, value);
 	}
 
 }
