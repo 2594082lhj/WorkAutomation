@@ -14,7 +14,9 @@ public class TestBaseAssignmentSection {
 		config.setNote(" note for test ");
 		config.setParameter("id,name,age,gender");
 		
+		double d = 3434.3423432434234324;
 		
+		System.out.println(d);
 	}
 	
 }

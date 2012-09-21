@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <method name="baseMethod">
 	
-	<section name="definedMethod">
+	<section name="definedMethod" parameters = "note,name">
 		<![CDATA[
 			/**
 			 * $[note]
@@ -28,13 +28,13 @@
 		]]>
 	</section>
 	
-	<section name="definedRquestParameters">
+	<section name="definedRquestParameters" parameters="parameter">
 		<![CDATA[
 			String $[parameter} = HttpUtil.getParamValue(request, "$[prameter]");
 		]]>
 	</section>
 	
-	<section name="definedParameters">
+	<section name="definedParameters" parameters = "hqlColunmName,headerName">
 		<![CDATA[
 			StringBuffer hql = new StringBuffer();
 			String[] hqlColumnName = new String[] { "$[hqlColumnName}" }; 
@@ -51,7 +51,7 @@
 		]]>
 	</section>
 	
-	<section name="returnMapping">
+	<section name="returnMapping" parameter = "mapping">
 		<![CDATA[
 			request.setAttribute("transfers", "<rows></rows>");
 			return mapping.findForward("$[mapping]");
