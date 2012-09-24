@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<method name="baseMethod">
-	
+<sections>
 	<section name="definedMethod" parameter = "note,name" logic="baseLogic">
 		<![CDATA[
 			/**
@@ -56,6 +55,5 @@
 			request.setAttribute("transfers", "<rows></rows>");
 			return mapping.findForward("$[mapping]");
 		]]>
-	</section>
-	
-</method>
+	</section>	
+</sections>

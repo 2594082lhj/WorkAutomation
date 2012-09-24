@@ -6,24 +6,19 @@ import java.util.List;
 public class MethodTemplate {
 
 	private String name;
-	private List<SectionTemplate> setionTemplates = new ArrayList<SectionTemplate>();
-	
-	public MethodTemplate() {
-		super();
-	}
+	private List<String> section = new ArrayList<String>();
 	
 	public String getName() {
 		return name;
 	}
-	
 	public void setName(String name) {
 		this.name = name;
 	}
-	public List<SectionTemplate> getSetionTemplates() {
-		return setionTemplates;
+	public List<String> getSection() {
+		return section;
 	}
-	public void setSetionTemplates(List<SectionTemplate> setionTemplates) {
-		this.setionTemplates = setionTemplates;
+	public void setSection(List<String> section) {
+		this.section = section;
 	}
 	
 }

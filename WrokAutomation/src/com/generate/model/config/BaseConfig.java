@@ -1,13 +1,10 @@
 package com.generate.model.config;
 
-import java.io.Serializable;
 
-public class BaseConfig implements Serializable{
-	
-	private static final long serialVersionUID = 1L;
+public class BaseConfig extends Config{
 	
 	private String note;		
-	private String name;		
+	private String methodName;		
 	private String parameter;	
 	private String mapping;		
 	
@@ -30,12 +27,14 @@ public class BaseConfig implements Serializable{
 		this.note = note;
 	}
 
-	public String getName() {
-		return name;
+	public String getMethodName() {
+		return methodName;
 	}
-	public void setName(String name) {
-		this.name = name;
+
+	public void setMethodName(String methodName) {
+		this.methodName = methodName;
 	}
+
 	public String getParameter() {
 		return parameter;
 	}
