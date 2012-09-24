@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <method name="baseMethod">
 	
-	<section name="definedMethod" parameters = "note,name">
+	<section name="definedMethod" parameter = "note,name" logic="baseLogic">
 		<![CDATA[
 			/**
 			 * $[note]
@@ -28,13 +28,13 @@
 		]]>
 	</section>
 	
-	<section name="definedRquestParameters" parameters="parameter">
+	<section name="definedRquestParameters" parameter="parameter">
 		<![CDATA[
 			String $[parameter} = HttpUtil.getParamValue(request, "$[prameter]");
 		]]>
 	</section>
 	
-	<section name="definedParameters" parameters = "hqlColunmName,headerName">
+	<section name="definedParameters" parameter = "hqlColunmName,headerName">
 		<![CDATA[
 			StringBuffer hql = new StringBuffer();
 			String[] hqlColumnName = new String[] { "$[hqlColumnName}" }; 
