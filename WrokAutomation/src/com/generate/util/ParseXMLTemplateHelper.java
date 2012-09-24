@@ -130,6 +130,24 @@ public class ParseXMLTemplateHelper {
 		}
 		return new LogicTemplate();
 	}
-		
-
+	
+	public static List<SectionTemplate> getAllSectionTemplates(){
+		List<MethodTemplate> methodTemplates = getInstance().methodTemplates;
+		List<SectionTemplate> sectionTemplates = new ArrayList<SectionTemplate>();
+		for (MethodTemplate methodTemplate : methodTemplates) {
+			sectionTemplates.addAll(methodTemplate.getSetionTemplates());
+		}
+		return sectionTemplates;
+	}
+	
+	public static SectionTemplate getSectionTemplate(String sectionName){
+		List<SectionTemplate> sectionTemplates = getAllSectionTemplates();
+		for (SectionTemplate sectionTemplate : sectionTemplates) {
+			if(sectionName.equalsIgnoreCase(sectionTemplate.getName())){
+				return sectionTemplate;
+			}
+		}
+		return new SectionTemplate();
+	}
+	
 }

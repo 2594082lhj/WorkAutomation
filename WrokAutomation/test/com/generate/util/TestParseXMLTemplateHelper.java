@@ -60,6 +60,20 @@ public class TestParseXMLTemplateHelper {
 			}
 		}
 	}
+	
+	@Test
+	public void testGetSectionTemplate(){
+		String sectionName = "returnNull";
+		SectionTemplate sectionTemplate = ParseXMLTemplateHelper.getSectionTemplate(sectionName);
+		System.out.println(sectionTemplate.getContent());
+	}
+	
+	@Test
+	public void testAssignment(){
+		
+		
+		
+	}
 
 
 }

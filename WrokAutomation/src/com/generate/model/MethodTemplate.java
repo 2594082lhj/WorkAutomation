@@ -8,9 +8,14 @@ public class MethodTemplate {
 	private String name;
 	private List<SectionTemplate> setionTemplates = new ArrayList<SectionTemplate>();
 	
+	public MethodTemplate() {
+		super();
+	}
+	
 	public String getName() {
 		return name;
 	}
+	
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -20,6 +25,5 @@ public class MethodTemplate {
 	public void setSetionTemplates(List<SectionTemplate> setionTemplates) {
 		this.setionTemplates = setionTemplates;
 	}
-	
 	
 }
