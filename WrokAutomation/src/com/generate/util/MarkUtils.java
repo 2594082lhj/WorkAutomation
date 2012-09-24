@@ -1,11 +1,7 @@
 package com.generate.util;
 
-import java.util.List;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import com.generate.model.LogicTemplate;
 
 public class MarkUtils {
 	
@@ -23,15 +19,7 @@ public class MarkUtils {
 	}
 	
 	public static String logicToSection(String source){
-		StringBuffer logicSection = new StringBuffer();
-		String logicName = getLogicMarkName(source);
-		LogicTemplate logicTemplate = ParseXMLTemplateHelper.getLogicTemplate(logicName);
-		List<String> sectionNames = logicTemplate.getSection();
-		Map<String,String> sections = ParseXMLTemplateHelper.getAllSections(); 
-		for (String sectionName : sectionNames) {
-			logicSection.append(sections.get(sectionName));
-		}
-		return logicSection.toString();
+		return "";
 	}
 	
 	

@@ -1,13 +1,15 @@
 package com.generate.model;
 
-import java.util.HashMap;
-import java.util.Map;
 
 public class SectionTemplate {
 	
 	private String name;
 	
-	private Map<String,String> sections = new HashMap<String,String>();
+	private String parameter;
+	
+	private String logic;
+	
+	private String content;
 
 	public String getName() {
 		return name;
@@ -17,12 +19,28 @@ public class SectionTemplate {
 		this.name = name;
 	}
 
-	public Map<String, String> getSections() {
-		return sections;
+	public String getContent() {
+		return content;
 	}
 
-	public void setSections(Map<String, String> sections) {
-		this.sections = sections;
+	public void setContent(String content) {
+		this.content = content;
+	}
+
+	public String getParameter() {
+		return parameter;
+	}
+
+	public void setParameter(String parameter) {
+		this.parameter = parameter;
+	}
+
+	public String getLogic() {
+		return logic;
+	}
+
+	public void setLogic(String logic) {
+		this.logic = logic;
 	}
 	
 }
