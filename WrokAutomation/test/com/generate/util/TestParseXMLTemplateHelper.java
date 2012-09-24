@@ -1,7 +1,5 @@
 package com.generate.util;
 
-import static org.junit.Assert.fail;
-
 import java.io.File;
 import java.util.List;
 
@@ -51,10 +49,6 @@ public class TestParseXMLTemplateHelper {
 		}
 	}
 
-	@Test
-	public void testConvertXMLToLogicModel() {
-		fail("Not yet implemented");
-	}
 
 	@Test
 	public void testGetLogicTemplate() {
