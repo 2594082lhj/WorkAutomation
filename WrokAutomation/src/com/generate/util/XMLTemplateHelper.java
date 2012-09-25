@@ -17,11 +17,9 @@ import com.generate.model.MethodTemplate;
 import com.generate.model.SectionTemplate;
 
 @SuppressWarnings("unchecked")
-public class ParseXMLTemplateHelper {
+public class XMLTemplateHelper {
 
-	public static final String METHODS = "methods";
-	public static final String SECTIONS = "sections";
-	public static final String LOGICS = "logics";
+	public static final String TEMPLATE = "template";
 	public static final String METHOD = "method";
 	public static final String SECTION = "section";
 	public static final String LOGIC = "logic";
@@ -38,16 +36,16 @@ public class ParseXMLTemplateHelper {
 
 	private Document doc = DocumentHelper.createDocument();
 	private SAXReader reader = new SAXReader();
-	private static ParseXMLTemplateHelper parseXMLTemplateHelper;
+	private static XMLTemplateHelper parseXMLTemplateHelper;
 
-	private ParseXMLTemplateHelper() {
+	private XMLTemplateHelper() {
 		super();
 		init();
 	}
 
-	public static synchronized ParseXMLTemplateHelper getInstance() {
+	public static synchronized XMLTemplateHelper getInstance() {
 		if (null == parseXMLTemplateHelper) {
-			parseXMLTemplateHelper = new ParseXMLTemplateHelper();
+			parseXMLTemplateHelper = new XMLTemplateHelper();
 		}
 		return parseXMLTemplateHelper;
 	}
@@ -59,13 +57,17 @@ public class ParseXMLTemplateHelper {
 			for (File template : templateFiles) {
 				doc = reader.read(template);
 				Element root = doc.getRootElement();
-				String rootName = root.getName();
-				if (METHODS.equalsIgnoreCase(rootName)) {
-					convertXMLToMethodModel(root);
-				}else if(SECTIONS.equalsIgnoreCase(rootName)){
-					convertXMLToSectionModel(root);
-				} else if (LOGICS.equalsIgnoreCase(rootName)) {
-					convertXMLToLogicModel(root);
+				List<Element> elements = root.elements();
+				for (Element element : elements) {
+					if(METHOD.equalsIgnoreCase(element.getName())){
+						convertXMLToMethodModel(element);
+					}else if(SECTION.equalsIgnoreCase(element.getName())){
+						convertXMLToSectionModel(element);
+					}else if(LOGIC.equalsIgnoreCase(element.getName())){
+						convertXMLToLogicModel(element);
+					}else{
+						Assert.fail("The node named ["+element.getName()+"] in ["+template.getName()+"] can not be resolved !");
+					}
 				}
 			}
 		} catch (Exception e) {
@@ -86,40 +88,35 @@ public class ParseXMLTemplateHelper {
 		}
 	}
 
-	public void convertXMLToMethodModel(Element root) throws DocumentException {
+	public void convertXMLToMethodModel(Element element) throws DocumentException {
 		MethodTemplate methodTemplate = new MethodTemplate();
-		Iterator<Element> nodeList = root.elementIterator();
-		methodTemplate.setName(root.attributeValue(NAME));
+		Iterator<Element> nodeList = element.elementIterator();
+		methodTemplate.setName(element.attributeValue(NAME));
 		List<String> sections = methodTemplate.getSection();
 		while (nodeList.hasNext()) {
 			Element note = (Element) nodeList.next();
 			Assert.assertEquals("Named " + note.getName()
-					+ " is not Legitimate ", METHOD, note.getName());
+					+ " is not Legitimate ", SECTION, note.getName());
 			sections.add(note.attributeValue(REF));
 		}
 		methodTemplates.add(methodTemplate);
 	}
-
 	
 	// convert a XML file to SectionTemplate
-	public void convertXMLToSectionModel(Element root) throws DocumentException {
-		Iterator<Element> nodeList = root.elementIterator();
-		while (nodeList.hasNext()) {
-			Element note = (Element) nodeList.next();
-			SectionTemplate sectionTemplate = new SectionTemplate();
-			sectionTemplate.setName(note.attributeValue(NAME));
-			sectionTemplate.setLogic(note.attributeValue(LOGIC));
-			sectionTemplate.setParameter(note.attributeValue(PARAMETER));
-			sectionTemplate.setContent(note.getText());
-			sectionTemplates.add(sectionTemplate);
-		}
+	public void convertXMLToSectionModel(Element element) throws DocumentException {
+		SectionTemplate sectionTemplate = new SectionTemplate();
+		sectionTemplate.setName(element.attributeValue(NAME));
+		sectionTemplate.setLogic(element.attributeValue(LOGIC));
+		sectionTemplate.setParameter(element.attributeValue(PARAMETER));
+		sectionTemplate.setContent(element.getText());
+		sectionTemplates.add(sectionTemplate);
 	}
 
 	// convert a XML file to LogicTemplate
-	public void convertXMLToLogicModel(Element root) throws DocumentException {
+	public void convertXMLToLogicModel(Element element) throws DocumentException {
 		LogicTemplate logicTemplate = new LogicTemplate();
-		Iterator<Element> nodeList = root.elementIterator();
-		logicTemplate.setName(root.attributeValue(NAME));
+		Iterator<Element> nodeList = element.elementIterator();
+		logicTemplate.setName(element.attributeValue(NAME));
 		List<String> sections = logicTemplate.getSection();
 		while (nodeList.hasNext()) {
 			Element note = (Element) nodeList.next();
@@ -159,6 +156,5 @@ public class ParseXMLTemplateHelper {
 		}
 		return new LogicTemplate();
 	}
-	
 	
 }
