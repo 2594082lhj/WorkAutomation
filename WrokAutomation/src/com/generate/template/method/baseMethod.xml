@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<methods>
+<template>
 	<method name="baseMethod">
 		<section ref = "definedMethod"/>
 	</method>
-</methods>
+</template>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<sections>
+<template>
 	<section name="definedMethod" parameter = "note,name" logic="baseLogic">
 		<![CDATA[
 			/**
@@ -56,4 +56,4 @@
 			return mapping.findForward("$[mapping]");
 		]]>
 	</section>	
-</sections>
+</template>
