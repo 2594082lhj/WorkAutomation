@@ -7,6 +7,8 @@ public class BaseConfig extends Config{
 	private String methodName;		
 	private String parameter;	
 	private String mapping;		
+	private String hqlColunmName;
+	private String headerName;
 	
 	public BaseConfig() {
 		super();
@@ -46,6 +48,22 @@ public class BaseConfig extends Config{
 	}
 	public void setMapping(String mapping) {
 		this.mapping = mapping;
+	}
+
+	public String getHqlColunmName() {
+		return hqlColunmName;
+	}
+
+	public void setHqlColunmName(String hqlColunmName) {
+		this.hqlColunmName = hqlColunmName;
+	}
+
+	public String getHeaderName() {
+		return headerName;
+	}
+
+	public void setHeaderName(String headerName) {
+		this.headerName = headerName;
 	}
 	
 }

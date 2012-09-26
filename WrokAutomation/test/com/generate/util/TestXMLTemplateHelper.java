@@ -15,7 +15,7 @@ public class TestXMLTemplateHelper {
 		String methodName = "baseMethod";
 		MethodTemplate methodTemplate = XMLTemplateHelper.getMethodTemplate(methodName);
 		Assert.assertEquals("baseMethod", methodTemplate.getName());
-		Assert.assertEquals("definedMethod", methodTemplate.getSection().get(0));
+		Assert.assertEquals("definedMethod", methodTemplate.getSections().get(0));
 	}
 
 	@Test
@@ -29,7 +29,7 @@ public class TestXMLTemplateHelper {
 	public void testGetLogicTemplate() {
 		String logicName = "baseLogic";
 		LogicTemplate logicTemplate = XMLTemplateHelper.getLogicTemplate(logicName);
-		Assert.assertEquals(2, logicTemplate.getSection().size());
+		Assert.assertEquals(2, logicTemplate.getSections().size());
 	}
 
 }

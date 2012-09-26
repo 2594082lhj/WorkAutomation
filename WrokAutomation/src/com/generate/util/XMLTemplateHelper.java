@@ -92,7 +92,7 @@ public class XMLTemplateHelper {
 		MethodTemplate methodTemplate = new MethodTemplate();
 		Iterator<Element> nodeList = element.elementIterator();
 		methodTemplate.setName(element.attributeValue(NAME));
-		List<String> sections = methodTemplate.getSection();
+		List<String> sections = methodTemplate.getSections();
 		while (nodeList.hasNext()) {
 			Element note = (Element) nodeList.next();
 			Assert.assertEquals("Named " + note.getName()
@@ -117,7 +117,7 @@ public class XMLTemplateHelper {
 		LogicTemplate logicTemplate = new LogicTemplate();
 		Iterator<Element> nodeList = element.elementIterator();
 		logicTemplate.setName(element.attributeValue(NAME));
-		List<String> sections = logicTemplate.getSection();
+		List<String> sections = logicTemplate.getSections();
 		while (nodeList.hasNext()) {
 			Element note = (Element) nodeList.next();
 			Assert.assertEquals("Named " + note.getName()
@@ -155,6 +155,34 @@ public class XMLTemplateHelper {
 			}
 		}
 		return new LogicTemplate();
+	}
+	
+	public static List<SectionTemplate> getLogicTemplates(String logicName){
+		List<SectionTemplate> sectionTemplates = new ArrayList<SectionTemplate>();
+		LogicTemplate logicTemplate = getLogicTemplate(logicName);
+		List<String> sections = logicTemplate.getSections();
+		for (String sectionName : sections) {
+			sectionTemplates.add(getSectionTemplate(sectionName));
+		}
+		return sectionTemplates;
+	}
+	
+	public static List<SectionTemplate> getSectionTemplates(String methodName){
+		List<SectionTemplate> sectionTemplates = new ArrayList<SectionTemplate>();
+		MethodTemplate methodTemplate = getMethodTemplate(methodName);
+		List<String> sections = methodTemplate.getSections();
+		for (String sectionName : sections) {
+			SectionTemplate sectionTemplate = getSectionTemplate(sectionName);
+			// if section include logic
+			if(!StringUtils.isNullOrBlank(sectionTemplate.getLogic())){
+				String [] logicNames = sectionTemplate.getLogic().split(",");
+				for (String logicName : logicNames) {
+					sectionTemplates.addAll(getLogicTemplates(logicName));
+				}
+			}
+			sectionTemplates.add(getSectionTemplate(sectionName));
+		}
+		return sectionTemplates;
 	}
 	
 }

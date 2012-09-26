@@ -4,7 +4,7 @@ package com.generate.util;
 public class StringUtils {
 	
 	//String[] to String use "," separated
-	public static String toCommaSeparated(String[] stringArray){
+	public static String toCommaSeparatedString(String[] stringArray){
 		StringBuffer string = new StringBuffer();
 		for (int i = 0; i < stringArray.length; i++) {
 			if(i == 0){

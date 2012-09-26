@@ -29,14 +29,14 @@
 	
 	<section name="definedRquestParameters" parameter="parameter">
 		<![CDATA[
-			String $[parameter} = HttpUtil.getParamValue(request, "$[prameter]");
+			String $[parameter] = HttpUtil.getParamValue(request, "$[parameter]");
 		]]>
 	</section>
 	
 	<section name="definedParameters" parameter = "hqlColunmName,headerName">
 		<![CDATA[
 			StringBuffer hql = new StringBuffer();
-			String[] hqlColumnName = new String[] { "$[hqlColumnName}" }; 
+			String[] hqlColumnName = new String[] { "$[hqlColunmName]" }; 
 			String[] headerName = new String[] { "$[headerName]" };
 			Conditions conditions = new Conditions();
 			PageHandel p = null;

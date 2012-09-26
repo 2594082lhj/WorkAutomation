@@ -9,7 +9,7 @@ public class TestStringUtils {
 	@Test
 	public void testToCommaSeparated() {
 		String [] stringArray = new String[]{"1","2","3","4"};
-		String actuals = StringUtils.toCommaSeparated(stringArray);
+		String actuals = StringUtils.toCommaSeparatedString(stringArray);
 		String expected = "1,2,3,4";
 		Assert.assertEquals(expected , actuals);
 	}

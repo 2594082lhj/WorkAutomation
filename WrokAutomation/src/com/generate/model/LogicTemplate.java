@@ -6,7 +6,7 @@ import java.util.List;
 public class LogicTemplate {
 	
 	private String name;
-	private List<String> section = new ArrayList<String>();
+	private List<String> sections = new ArrayList<String>();
 	
 	public String getName() {
 		return name;
@@ -14,11 +14,11 @@ public class LogicTemplate {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public List<String> getSection() {
-		return section;
+	public List<String> getSections() {
+		return sections;
 	}
-	public void setSection(List<String> section) {
-		this.section = section;
+	public void setSections(List<String> sections) {
+		this.sections = sections;
 	}
 	
 }
