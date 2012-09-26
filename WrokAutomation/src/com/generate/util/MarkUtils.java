@@ -7,6 +7,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.generate.model.SectionTemplate;
+import com.generate.model.config.BaseConfig;
 
 public class MarkUtils {
 	
@@ -23,7 +24,7 @@ public class MarkUtils {
 		return returnValue;
 	}
 	
-	public void assigmentLogicOrMethod(Class<?> c, List<SectionTemplate> sectionTemplates){
+	public static void assigmentLogicOrMethod(BaseConfig c, List<SectionTemplate> sectionTemplates){
 		List<SectionTemplate> sections = null;
 		for (SectionTemplate sectionTemplate : sectionTemplates) {
 			if(!StringUtils.isNullOrBlank(sectionTemplate.getLogic())){
@@ -31,18 +32,19 @@ public class MarkUtils {
 				assigmentLogicOrMethod(c, sections);
 			}
 			try {
-				assignmentSections(c.getClass(), sectionTemplate);
+				assignmentSections(c, sectionTemplate);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
 	}
 	
-	public void assignmentSections(Class<?> c, SectionTemplate sectionTemplate)
+	public static void assignmentSections(BaseConfig baseConfig, SectionTemplate sectionTemplate)
 			throws SecurityException, NoSuchMethodException,
 			IllegalArgumentException, IllegalAccessException,
 			InvocationTargetException {
-
+		
+		Class<?> c = baseConfig.getClass();
 		String[] parameters = sectionTemplate.getParameter().split(",");
 		String content = sectionTemplate.getContent();
 		StringBuffer assignmentContext = new StringBuffer();

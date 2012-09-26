@@ -35,14 +35,7 @@ public class TestBaseAssignmentSection {
 				.getInstance().logicTemplates;
 		List<SectionTemplate> sectionsForLogic = null;
 		// assignment
-		Class<? extends BaseConfig> c = config.getClass();
-		for (SectionTemplate sectionTemplate : sectionsForMethod) {
-			if(!StringUtils.isNullOrBlank(sectionTemplate.getLogic())){
-				sectionsForLogic = logicTemplates.get(sectionTemplate.getLogic());
-			}
-			assignmentSections(c.getClass(), sectionTemplate);
-		}
-
+		MarkUtils.assigmentLogicOrMethod(config, sectionsForMethod);
 		// print for view
 		for (SectionTemplate sectionTemplate : sectionsForMethod) {
 			System.out.println("Section Name:" + sectionTemplate.getName());
